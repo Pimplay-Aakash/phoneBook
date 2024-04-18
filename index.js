@@ -47,13 +47,42 @@ app.use((req, res, next) => {
     next();
   });
 
-// POST endpoint to add a new contact
-app.post('/contacts', (req, res) => {
-  const newContact = new Contact(req.body);
-  newContact.save()
-    .then(contact => res.json(contact))
-    .catch(err => res.status(400).json('Error: ' + err));
+  app.use((err, req, res, next) => {
+    res.status(500).json({ error: 'Internal Server Error' });
 });
+
+// Set default Content-Type
+app.use((req, res, next) => {
+  res.setHeader('Content-Type', 'application/json');
+  next();
+});
+
+
+// // POST endpoint to add a new contact
+// app.post('/contacts', (req, res) => {
+//   const newContact = new Contact(req.body);
+//   newContact.save()
+//     .then(contact => res.json(contact))
+//     .catch(err => res.status(400).json('Error: ' + err));
+// });
+
+// // POST endpoint to add a new contact
+// app.post('/contacts', (req, res) => {
+//   if(Array.isArray(req.body)) {
+//     // If the request body is an array of objects, insert multiple contacts
+//     Contact.insertMany(req.body)
+//       .then(contacts => res.json(contacts))
+//       .catch(err => res.status(400).json('Error: ' + err));
+//   } else {
+//     // If the request body is a single object, insert a single contact
+//     const newContact = new Contact(req.body);
+//     newContact.save()
+//       .then(contact => res.json(contact))
+//       .catch(err => res.status(400).json('Error: ' + err));
+//   }
+// });
+
+
 
 // GET endpoint to fetch all contacts
 app.get('/contacts', (req, res) => {
@@ -83,32 +112,3 @@ app.get('/', (req, res) => {
 const port = process.env.port || 5000;
 app.listen(port, () => console.log(`Server running on port ${port}`));
 
-
-// // Example of adding a new contact
-// const addContact = async (contact) => {
-//     try {
-//       const response = await fetch('http://localhost:3000/contacts', {
-//         method: 'POST',
-//         headers: {
-//           'Content-Type': 'application/json',
-//         },
-//         body: JSON.stringify(contact),
-//       });
-//       const json = await response.json();
-//       console.log('Contact added:', json);
-//     } catch (error) {
-//       console.error('Error adding contact:', error);
-//     }
-//   };
-  
-//   // Example of fetching contacts
-//   const fetchContacts = async () => {
-//     try {
-//       const response = await fetch('http://localhost:3000/contacts');
-//       const json = await response.json();
-//       console.log('Contacts:', json);
-//     } catch (error) {
-//       console.error('Error fetching contacts:', error);
-//     }
-//   };
-  
