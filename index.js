@@ -6,11 +6,17 @@
 
 // app.listen(port,() => {console.log("listening at ", port);})
 
+// for the creadentials
+require("dotenv").config
+
+const creadName = process.env.NAME
+const creadPass = process.env.LkGhrkKrRWU2V1W2
+
 const mongoose = require('mongoose');
 
 // Connect to MongoDB
 
-const url = 'mongodb+srv://shadowkey60:LkGhrkKrRWU2V1W2@phone.euqses1.mongodb.net/?retryWrites=true&w=majority&appName=phone'
+const url = `mongodb+srv://${creadName}:${creadPass}@phone.euqses1.mongodb.net/?retryWrites=true&w=majority&appName=phone`
 mongoose.connect(url, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
