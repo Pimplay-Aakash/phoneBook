@@ -82,6 +82,23 @@ app.use((req, res, next) => {
 //   }
 // });
 
+// POST endpoint to add a new contact or multiple contacts
+app.post('/contacts', (req, res) => {
+  const requestData = req.body;
+  if (Array.isArray(requestData)) {
+    // If the request body is an array of objects, insert multiple contacts
+    Contact.insertMany(requestData)
+      .then(contacts => res.json(contacts))
+      .catch(err => res.status(400).json({ error: 'Error adding contacts', details: err }));
+  } else {
+    // If the request body is a single object, insert a single contact
+    const newContact = new Contact(requestData);
+    newContact.save()
+      .then(contact => res.json(contact))
+      .catch(err => res.status(400).json({ error: 'Error adding contact', details: err }));
+  }
+});
+
 
 
 // GET endpoint to fetch all contacts
