@@ -7,7 +7,7 @@
 // app.listen(port,() => {console.log("listening at ", port);})
 
 // for the creadentials
-require("dotenv").config
+require('dotenv').config();
 
 
 
@@ -16,6 +16,8 @@ const mongoose = require('mongoose');
 // Connect to MongoDB
 
 const url = process.env.MONGODB_URI
+
+console.log("reerrr",url)
 mongoose.connect(url, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
